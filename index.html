@@ -2,13 +2,20 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bloqueo estricto para evitar que la página se desajuste o haga zoom en móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para Mamá - Un Bosque de Amor</title>
     <!-- Tipografías elegantes -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Pantalla de inicio para activar el audio de forma segura -->
+    <div id="start-screen">
+        <h2 style="font-family: 'Cinzel Decorative', serif; color: #fff; margin-bottom: 20px; font-size: 2rem; text-align: center; padding: 0 20px;">Tengo algo especial para ti, mami...</h2>
+        <button id="start-btn">Tocar para descubrir ✨</button>
+    </div>
+
     <!-- Fondo del Bosque Encantado -->
     <div class="forest-bg distant">🌲 🌳 🌲 🌳 🌲 🌳 🌲 🌳</div>
     <div class="forest-bg mid">🌳 🌲 🌳 🌲 🌳 🌲 🌳 🌲</div>
@@ -25,7 +32,7 @@
         </div>
         <div class="slide">
             <h1 class="main-title">¡Feliz Día de las Madres!</h1>
-            <p>Te mereces el bosque y las estrellas Dios te bendiga mami ❤️.</p>
+            <p>Te mereces el bosque y las estrellas. Dios te bendiga mami ❤️.</p>
         </div>
         
         <!-- Botón para avanzar la presentación -->
@@ -50,6 +57,11 @@
         <div class="glow-dot"></div>
         <span>Realizado por <strong>Manuel Cabello</strong></span>
     </footer>
+    
+    <!-- Reproductor oculto (quitamos el autoplay para usar el botón) -->
+    <audio id="bg-music" loop>
+        <source src="Musica2.mp3" type="audio/mpeg">
+    </audio>
 
     <script src="script.js"></script>
 </body>

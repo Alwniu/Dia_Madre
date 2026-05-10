@@ -1,3 +1,26 @@
+// --- LÓGICA DE MÚSICA Y PANTALLA DE INICIO ---
+const bgMusic = document.getElementById('bg-music');
+const startScreen = document.getElementById('start-screen');
+const startBtn = document.getElementById('start-btn');
+
+// Ajusta el volumen si lo deseas (0.0 a 1.0)
+bgMusic.volume = 0.5; 
+
+startBtn.addEventListener('click', () => {
+    // 1. Iniciar la música
+    bgMusic.play().catch(error => {
+        console.log("No se pudo reproducir el audio.", error);
+    });
+
+    // 2. Desvanecer la pantalla de inicio
+    startScreen.style.opacity = '0';
+    
+    // 3. Quitarla del DOM para interactuar con la presentación
+    setTimeout(() => {
+        startScreen.style.visibility = 'hidden';
+    }, 1000);
+});
+
 // --- LÓGICA DE LA PRESENTACIÓN ---
 const slides = document.querySelectorAll('.slide');
 const nextBtn = document.getElementById('next-btn');
@@ -10,9 +33,9 @@ nextBtn.addEventListener('click', () => {
     // Calcular siguiente diapositiva
     currentSlide++;
     
-    // Si llegamos a la última, cambiar el texto del botón o reiniciar
+    // Si llegamos a la última, reiniciar
     if (currentSlide >= slides.length) {
-        currentSlide = 0; // Reinicia el ciclo
+        currentSlide = 0; 
     }
     
     if (currentSlide === slides.length - 1) {
@@ -30,44 +53,39 @@ function createParticle() {
     const particle = document.createElement('div');
     particle.className = 'particle';
     
-    // Gran variedad de elementos cayendo: Margaritas, hojas, pétalos, brillos
     const types = ['🌼', '🌸', '✨', '🍂', '🍃', '💮', '💛'];
     particle.innerText = types[Math.floor(Math.random() * types.length)];
     
-    // Posición y tamaño aleatorio
-    const startPosX = Math.random() * 100; // De 0 a 100vw
-    const duration = Math.random() * 6 + 6; // Entre 6 y 12 segundos (caída suave)
-    const size = Math.random() * 1.5 + 0.8; // Tamaño en rem
+    const startPosX = Math.random() * 100;
+    const duration = Math.random() * 6 + 6; 
+    const size = Math.random() * 1.5 + 0.8; 
     
-    // Asignar estilos
     particle.style.left = startPosX + 'vw';
     particle.style.animationDuration = duration + 's';
     particle.style.fontSize = size + 'rem';
     
-    // Pequeño efecto de desenfoque para dar profundidad a algunas partículas
     if (Math.random() > 0.7) {
         particle.style.filter = 'blur(2px)';
-        particle.style.zIndex = 10; // Detrás de la tarjeta
+        particle.style.zIndex = 10; 
     }
 
     document.body.appendChild(particle);
 
-    // Limpiar el DOM cuando la animación termine
     setTimeout(() => {
         particle.remove();
     }, duration * 1000);
 }
 
-// Generar una nueva partícula cada 250ms para un bosque frondoso
 setInterval(createParticle, 250);
 
-// --- INTERACTIVIDAD EXTRA: Magia al hacer clic ---
-document.addEventListener('click', (e) => {
-    // Evitar que el clic en el botón genere flores encima de él
-    if(e.target.id === 'next-btn') return;
+// --- INTERACTIVIDAD EXTRA: Magia al tocar la pantalla ---
+// Usamos 'pointerdown' para que detecte toques en teléfonos y clics en PC
+document.addEventListener('pointerdown', (e) => {
+    // Evitar generar flores si tocamos botones
+    if(e.target.tagName.toLowerCase() === 'button') return;
 
     const magic = document.createElement('div');
-    magic.innerText = '🌼'; // Genera una margarita donde haces clic
+    magic.innerText = '🌼'; 
     magic.style.position = 'absolute';
     magic.style.left = (e.pageX - 15) + 'px';
     magic.style.top = (e.pageY - 15) + 'px';
@@ -78,12 +96,10 @@ document.addEventListener('click', (e) => {
     
     document.body.appendChild(magic);
 
-    // Animar la flor hacia arriba desvaneciéndose
     requestAnimationFrame(() => {
         magic.style.transform = 'translateY(-100px) rotate(180deg) scale(1.5)';
         magic.style.opacity = '0';
     });
 
-    // Eliminar
     setTimeout(() => magic.remove(), 1000);
 });
